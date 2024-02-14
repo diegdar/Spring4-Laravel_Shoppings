@@ -9,7 +9,7 @@
     <!-- favicon -->
     <!-- estilos -->
 </head>
-<body class="bg-slate-300 ">
+<body class="bg-slate-300 py-3 px-3">
     <!-- header -->
     <!-- nav -->
 
