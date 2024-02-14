@@ -19,4 +19,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class);
 
 Route::resource('products', ProductController::class);
-Route::resource('purchases', PurchaseController::class);
