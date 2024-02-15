@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 /*
 🗒️NOTAS:
 1: compact('products'): es el array que recogemos en la variable $products
-2: Asignacion masiva para insertar registros: Crea una instancia de la clase product y le pasará los valores recibidos en el formulario a los atributos 'name', 'descripcion' y 'categoria' y ademas guardará estos registros en la BBDD internamente con el metodo save() por lo que es mejor que pasar los datos uno por uno de forma manual(como se muestra en arriba en lo que esta comentado) y se escribe mucho menos codigo. ⚠️para que funcione hay que configurar en la Clase product un atributo con el nombre $fillable o $guarded.
+2: Asignacion masiva para insertar registros: Crea una instancia de la clase product y le pasará los valores recibidos en el formulario a los campos 'descripcion', ''unit_price' y 'category' y ademas guardará estos registros en la BBDD internamente con el metodo save() por lo que es mejor que pasar los datos uno por uno de forma manual. 
+    ⚠️para que funcione hay que configurar en la Clase product un atributo con el nombre $fillable o $guarded.
 3: recogemos el producto seleccionado para editar.
     pasa los campos del producto seleccionado a la vista.
 
@@ -50,7 +51,11 @@ class ProductController extends Controller
     }
     // Update a product from the list
     public function update(UpdateProduct $request, Product $product){
-        
+        $product->update($request->all()); //nota 2
+
+        $products = Product::orderBy('id', 'desc')->paginate(); //nota 1
+        return view('products.index', compact('products'));//nota 2
+
     }
 
 }
