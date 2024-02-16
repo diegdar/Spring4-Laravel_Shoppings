@@ -1,7 +1,7 @@
 {{-- 
-🗒️NOTAS:
+🗒️noteS:
 1: crea un token oculto para que los usuarios no generen codigo malicioso antes de enviar el formulario.
-    
+2: mostrara un mensaje personalizado cuando no se cumpla la validacion del campo    
     --}}
 @extends('layouts.plantilla')
 
@@ -9,10 +9,10 @@
 
 @section('content')
 
-    <h1 class="h1-8xl text-centertext-red-500">Lista de Productos</h1>
-    <table>
+    <h1 class="text-6xl text-center text-red-500 my-4">Lista de Productos</h1>
+    <table class="flex items-center justify-center">
         {{-- Table header rows --}}
-        <tr class="bg">
+        <tr>
             <th>descripcion Producto</th>
             <th>precio unitario</th>
             <th>categoria</th>
@@ -20,15 +20,33 @@
         <tr>
             {{-- Data insertion rows --}}
             <form action="{{ route('products.store') }}" method="POST">
-                @csrf{{-- nota 1 --}}
-                <td>
-                    <input type="text" name="description">
+                @csrf{{-- note 1 --}}
+                <td class='px-4 py-2 border border-blue-200 rounded'>
+                    <input type="text" class="h-9" name="description">
+                    @error('description'){{-- note 2 --}}
+                        <br>
+                        <span class="textValidation">*{{ $message }}</span>
+                    @enderror
+                </td>
+                <td class='px-4 py-2 border border-blue-200 rounded'>
+                    <input type="text" class="h-9" name="unit_price">
+                    @error('unit_price'){{-- note 2 --}}         
+                        <br>
+                        <span class="textValidation">*{{ $message }}</span>
+                    @enderror
                 </td>
                 <td>
-                    <input type="text" name="unit_price">
-                </td>
-                <td>
-                    <input type="text" name="category">
+                    <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
+                        <option value="--">--Escoje un valor--</option>
+                        <option value="Alimentacion">Alimentacion</option>
+                        <option value="Limpieza">Limpieza</option>
+                        <option value="Higiene personal">Higiene personal</option>
+                        <option value="Hogar">Hogar</option>
+                    </select>
+                    @error('category'){{-- note 2 --}}
+                        <br>
+                        <span class="textValidation">*{{ $message }}</span>
+                    @enderror
                 </td>
                 <td class='py-2 px-4'><input type='submit' value='Insertar'
                         class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300'>
@@ -51,12 +69,12 @@
                 {{-- Delete button --}}
                 <td class="py-2 px-4">
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                        @csrf{{-- nota 1 --}}
-                        @method('delete'){{-- nota 2 --}}
+                        @csrf{{-- note 1 --}}
+                        @method('delete'){{-- note 2 --}}
                         <button type="submit" onclick="return confirmDelete('{{ $product->description }}')"
-                            class='bg-red-500 text-white px-8 py-2 rounded hover:bg-red-300'>Borrar</button>
+                            class='bg-red-500 text-white mt-4 px-8 py-2 rounded hover:bg-red-300'>Borrar</button>
                     </form>
-                </td>
+                </td class="py-2 px-4">
                 {{-- Update button --}}
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}">
