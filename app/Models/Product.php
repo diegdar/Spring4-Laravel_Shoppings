@@ -18,6 +18,6 @@ class Product extends Model
 
         public $timestamps = false;
 
-    protected $guarded = [];//nota 1
+    protected $guarded = [];//note 1
 
 }
