@@ -3,13 +3,14 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+/*
 🗒️NOTES:
 1: This authorize() method is used to indicate which users have access but this can already be handled with the policies so it is better to leave the return true.
 2: validates the data received by the form.
 3: Customize validation messages.
 4: Customize the attribute names on the form.
 
+*/
 class validationPurchase extends FormRequest
 {
     /**
@@ -28,33 +29,31 @@ class validationPurchase extends FormRequest
     public function rules(): array
     {
         return [//note 2
+            'purchase_date'=>'date',
             'quantity'=>'required|decimal:0',
             'amount'=>'required|decimal:2',
             'supermarket'=>'required|string',
+            'product'=>'required|string',
         ];
     }
     public function messages(): array //note 3 
     {
         return[
+            // purchase_date
+                'purchase_date.date'=>'Formato fecha admitido: dd/mm/aaaa',
             // quantity
                 'quantity.required'=> 'Este campo es obligatorio',
                 'quantity.decimal'=> 'Solo se admite numeros enteros',
             // amount
                 'amount.required'=> 'Este campo es obligatorio',
                 'amount.decimal'=> 'Solo se admite numeros con 2 decimales',
-
             // supermarket
                 'supermarket.required'=> 'Este campo es obligatorio',
                 'supermarket.string'=> 'Se admite solo letras',
+            // product
+                'product.required'=>'Este campo es obligatorio',
+                'product.string'=> 'Se admite solo letras',
         ];
     }
 
-    public function attributes():array//note 4 
-    {
-        return[
-            'description'=>'descripcion del producto',
-            'unit_price'=>'precio unitario del producto',
-            'category'=>'categoria del producto, pudiendo ser solo: Alimentacion, Higiene personal o Hogar',
-        ];
-    }
 }
