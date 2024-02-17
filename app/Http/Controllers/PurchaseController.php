@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\validationPurchase;
 use App\Models\Purchase;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 /*
 🗒️NOTES:
@@ -36,13 +37,22 @@ class PurchaseController extends Controller
     }
     // create a new Purchase in the DB and show the Purchase list 
     public function store(validationPurchase $request){
-        // return $request;
-
-        Purchase::create($request->all());//note 1
-
-        return redirect()->route('purchases.index');//nota 19
-    }
-    // Delete a Purchase in the DB and show the Purchase list
+        $purchase_date = $request->purchase_date;
+        
+        try {
+            $date = Carbon::createFromFormat('d/m/Y', $purchase_date)->format('Y-m-d');
+        } catch (\Exception $e) {
+            // Manejar el error de formato de fecha
+            return back()->withInput()->withErrors(['purchase_date' => 'Formato de fecha inválido']);
+        }
+    
+        $data = $request->all();
+        $data['purchase_date'] = $date;
+    
+        Purchase::create($data);
+        
+        return redirect()->route('purchases.index');
+    }    // Delete a Purchase in the DB and show the Purchase list
     public function destroy(Purchase $Purchase){
 
         $Purchase->delete();

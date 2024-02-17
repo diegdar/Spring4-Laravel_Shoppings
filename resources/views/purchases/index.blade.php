@@ -121,6 +121,6 @@
 
 <script>
     function confirmDelete(purchasepurchase_date) {
-        return confirm("¿Estás seguro de que deseas borrar el purchaseo: " + purchasepurchase_date + "?");
+        return confirm("¿Estás seguro de que deseas borrar la compra hecha el dia: " + purchasepurchase_date + "?");
     }
 </script>
