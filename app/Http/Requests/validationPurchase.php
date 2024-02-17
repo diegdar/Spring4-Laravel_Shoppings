@@ -29,11 +29,11 @@ class validationPurchase extends FormRequest
     public function rules(): array
     {
         return [//note 2
-            'purchase_date'=>'date',
+            // 'purchase_date'=>'date',
             'quantity'=>'required|decimal:0',
             'amount'=>'required|decimal:2',
             'supermarket'=>'required|string',
-            'product'=>'required|string',
+            'product_id'=>'required|string',
         ];
     }
     public function messages(): array //note 3 
@@ -50,9 +50,9 @@ class validationPurchase extends FormRequest
             // supermarket
                 'supermarket.required'=> 'Este campo es obligatorio',
                 'supermarket.string'=> 'Se admite solo letras',
-            // product
-                'product.required'=>'Este campo es obligatorio',
-                'product.string'=> 'Se admite solo letras',
+            // product_id
+                'product_id.required'=>'Este campo es obligatorio',
+                'product_id.string'=> 'Se admite solo letras',
         ];
     }
 

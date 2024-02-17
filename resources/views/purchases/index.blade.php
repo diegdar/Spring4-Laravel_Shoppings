@@ -1,7 +1,8 @@
 {{-- 
 🗒️noteS:
 1: crea un token oculto para que los usuarios no generen codigo malicioso antes de enviar el formulario.
-2: mostrara un mensaje personalizado cuando no se cumpla la validacion del campo    
+2: mostrara un mensaje personalizado cuando no se cumpla la validacion del campo.
+3: We have to subtract 1 unit to match the array position with the product_id      
     --}}
 @extends('layouts.plantilla')
 
@@ -9,7 +10,7 @@
 
 @section('content')
 
-    <h1 class="text-6xl text-center text-red-500 my-4">Lista de Compras</h1>
+    <h1 class="text-6xl text-center text-red-500 my-4">Lista Productos Comprados</h1>
     <table class="flex items-center justify-center">
         {{-- Table header rows --}}
         <tr>
@@ -34,7 +35,7 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="quantity">
+                        <input type="text" class="h-9" name="quantity" >
                         @error('quantity')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
@@ -61,13 +62,13 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <select name="product" id="product" class='px-4 py-2 border border-blue-200 rounded'>
+                        <select name="product_id" id="product_id" class='px-4 py-2 border border-blue-200 rounded'>
                             <option value="">--Elige un producto--</option>
-                            @foreach ($products as $product)
+                            @foreach ($sortedProducts as $product)
                                 <option value="{{ $product->id }}">{{ $product->description }}</option>
                             @endforeach
                         </select>
-                        @error('product')
+                        @error('product_id')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
                         @enderror
@@ -89,7 +90,13 @@
                     {{ $purchase->quantity }}
                 </td>
                 <td class="text-center">
-                    {{ $purchase->category }}
+                    {{ $purchase->amount }}
+                </td>
+                <td class="text-center">
+                    {{ $purchase->supermarket }}
+                </td>
+                <td class="text-center">
+                    {{ $products[$purchase->product_id-1]->description}}{{-- note 3 --}}
                 </td>
                 {{-- Delete button --}}
                 <td class="py-2 px-4">

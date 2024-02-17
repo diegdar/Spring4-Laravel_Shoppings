@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
      passes the fields of the selected Purchase into view.
 
 4: After deleting it will redirect the user to the list of records.
+5: Get all products sorted alphabetically by description.
+6: We need as well all the products unsorted by description to match the 'id_product' and the position in the array $products
 */
 
 class PurchaseController extends Controller
@@ -24,12 +26,12 @@ class PurchaseController extends Controller
 
         $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
         // return $purchases;
+       
+        $sortedProducts = Product::orderBy('description')->get();//note 5
+        // return $sortedProducts;
+        $products = Product::all();//note 6
 
-        // Get all products sorted alphabetically by description        
-        $products = Product::orderBy('description')->get();
-        // return $products;
-
-        return view('purchases.index', compact('purchases','products'));//note 2
+        return view('purchases.index', compact('purchases','products', 'sortedProducts'));//note 2
 
     }
     // create a new Purchase in the DB and show the Purchase list 
@@ -38,8 +40,7 @@ class PurchaseController extends Controller
 
         Purchase::create($request->all());//note 1
 
-        $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
-        return view('purchases.index', compact('purchases'));//note 2
+        return redirect()->route('purchases.index');//nota 19
     }
     // Delete a Purchase in the DB and show the Purchase list
     public function destroy(Purchase $Purchase){
