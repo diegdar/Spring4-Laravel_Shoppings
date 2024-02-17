@@ -11,7 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 4: Customize the attribute names on the form.
 */
 
-class validationProduct extends FormRequest
+class validationPurchase extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,25 +29,23 @@ class validationProduct extends FormRequest
     public function rules(): array
     {
         return [//note 2
-            'description'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
-            'unit_price'=>'required|decimal:2',
-            'category'=>'required|string|in:Alimentacion,Limpieza,Higiene personal,Hogar',
+            'quantity'=>'required|decimal:0',
+            'amount'=>'required|decimal:2',
+            'supermarket'=>'required|string',
         ];
     }
     public function messages(): array //note 3 
     {
         return[
-            // description
-                'description.required'=> 'Este campo es obligatorio',
-                'description.min'=> 'Debe tener al menos 4 letras',
-                'description.regex'=> 'Se admite solo letras',
-            // unit_price
-                'unit_price.required'=> 'Este campo es obligatorio',
-                'unit_price.decimal'=> 'Solo se admiten numeros con 2 decimales',
-            // category
-                'category.required'=> 'Este campo es obligatorio',
-                'category.string'=> 'Se admite solo letras',
-                'category.in'=> 'Debes escoger un valor',
+            // quantity
+                'quantity.required'=> 'Este campo es obligatorio',
+                'quantity.numeric'=> 'Solo se admite numeros enteros',
+            // amount
+                'amount.required'=> 'Este campo es obligatorio',
+                'amount.decimal'=> 'Solo se admite numeros con 2 decimales',
+            // supermarket
+                'supermarket.required'=> 'Este campo es obligatorio',
+                'supermarket.string'=> 'Se admite solo letras',
         ];
     }
     public function attributes():array//note 4 
@@ -58,6 +56,4 @@ class validationProduct extends FormRequest
             'category'=>'categoria del producto, pudiendo ser solo: Alimentacion, Higiene personal o Hogar',
         ];
     }
-
-
 }
