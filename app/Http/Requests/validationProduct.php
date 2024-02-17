@@ -4,12 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 /*
-🗒️noteS:
-1: Este metodo authorize() se utiliza para indicar que usuarios tienen acceso pero esto ya se puede manejar con la polises por lo que mejor es dejar el return en true.
-2: valida los datos recibidos por el formulario.
-3: personaliza los mensajes de validacion.
-4: personaliza los nombres de los atributos en el formulario.
-
+🗒️NOTES:
+1: This authorize() method is used to indicate which users have access but this can already be handled with the policies so it is better to leave the return true.
+2: validates the data received by the form.
+3: Customize validation messages.
+4: Customize the attribute names on the form.
 */
 
 class validationProduct extends FormRequest

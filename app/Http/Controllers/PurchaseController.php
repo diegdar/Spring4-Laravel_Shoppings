@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\validationPurchase;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+
 /*
 🗒️NOTES:
 1: compact('Purchases'): it is the array that we collect in the variable $Purchases
