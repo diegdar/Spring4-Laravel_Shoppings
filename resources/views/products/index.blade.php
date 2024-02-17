@@ -21,32 +21,38 @@
             {{-- Data insertion rows --}}
             <form action="{{ route('products.store') }}" method="POST">
                 @csrf{{-- note 1 --}}
-                <td class='px-4 py-2 border border-blue-200 rounded'>
-                    <input type="text" class="h-9" name="description">
-                    @error('description'){{-- note 2 --}}
-                        <br>
-                        <span class="textValidation">*{{ $message }}</span>
-                    @enderror
-                </td>
-                <td class='px-4 py-2 border border-blue-200 rounded'>
-                    <input type="text" class="h-9" name="unit_price">
-                    @error('unit_price'){{-- note 2 --}}         
-                        <br>
-                        <span class="textValidation">*{{ $message }}</span>
-                    @enderror
+                <td>
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <input type="text" class="h-9" name="description">
+                        @error('description')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
                 </td>
                 <td>
-                    <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
-                        <option value="--">--Escoje un valor--</option>
-                        <option value="Alimentacion">Alimentacion</option>
-                        <option value="Limpieza">Limpieza</option>
-                        <option value="Higiene personal">Higiene personal</option>
-                        <option value="Hogar">Hogar</option>
-                    </select>
-                    @error('category'){{-- note 2 --}}
-                        <br>
-                        <span class="textValidation">*{{ $message }}</span>
-                    @enderror
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <input type="text" class="h-9" name="unit_price">
+                        @error('unit_price')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
+                </td>
+                <td>
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
+                            <option value="--">--Escoje un valor--</option>
+                            <option value="Alimentacion">Alimentacion</option>
+                            <option value="Limpieza">Limpieza</option>
+                            <option value="Higiene personal">Higiene personal</option>
+                            <option value="Hogar">Hogar</option>
+                        </select>
+                        @error('category')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
                 </td>
                 <td class='py-2 px-4'><input type='submit' value='Insertar'
                         class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300'>
