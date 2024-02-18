@@ -23,7 +23,7 @@
                 @csrf{{-- note 1 --}}
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="description">
+                        <input type="text" class="h-9" name="description" style="text-align: center;">
                         @error('description')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="unit_price">
+                        <input type="text" class="h-9" name="unit_price" style="text-align: center;">
                         @error('unit_price')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
