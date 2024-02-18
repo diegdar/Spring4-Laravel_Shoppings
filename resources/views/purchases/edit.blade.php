@@ -14,10 +14,6 @@
 
 @section('content')
     <h1 class="text-4xl	text-red-500 font-semibold">Edicion de la Compra:</h1>
-    <a href="{{ route('purchases.index', $purchase->id) }}">
-        <input type='button' value='Volver a lista Compras'
-            class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500 my-2'>
-    </a>
     {{-- note 1 --}}
     <form action="{{ route('purchases.update', $purchase->id) }}" method="post" class="my-5 mx-3">
         @csrf {{-- note 2 --}}
@@ -80,7 +76,7 @@
             <br>
             <select name="product_id" id="product_id" class='px-4 py-2 border border-blue-200 rounded'>
                 <option value="{{ old('supermarket', $purchase->product_id) }}">{{ $sortedProducts[$purchase->product_id-1]->description}}{{--note 6--}}</option>
-                @foreach ($sortedProducts as $product){{--note 7--}}
+                @foreach ($sortedProducts as $product){{--note 6--}}
                     <option value="{{ $product->id }}">{{ $product->description }}</option>                    
                 @endforeach
             </select>
