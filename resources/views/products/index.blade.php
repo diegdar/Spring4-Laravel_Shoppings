@@ -8,6 +8,10 @@
 @section('title', 'Productos')
 
 @section('content')
+<a href="{{ route('home') }}">
+    <input type='button' value='Volver a Home'
+        class='bg-green-700 text-white px-4 py-2 rounded hover:bg-yellow-500 my-2'>
+</a>
 
     <h1 class="text-6xl text-center text-red-500 my-4">Lista de Productos</h1>
     <table class="flex items-center justify-center">

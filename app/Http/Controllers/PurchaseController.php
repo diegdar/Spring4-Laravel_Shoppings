@@ -15,13 +15,14 @@ use Illuminate\Http\Request;
 3: we collect the selected Purchase to edit.
      passes the fields of the selected Purchase into view.
 
-4: After deleting it will redirect the user to the list of records.
+4: After the method action is done we redirect the user to the list of the records.
 5: Get all products sorted alphabetically by description.
 6: We need as well all the products unsorted by description to match the 'id_product' and the position in the array $products
 */
 
 class PurchaseController extends Controller
 {
+    
     // Show the purchases list
     public function index(){
 
@@ -53,23 +54,28 @@ class PurchaseController extends Controller
         
         return redirect()->route('purchases.index');
     }    // Delete a Purchase in the DB and show the Purchase list
-    public function destroy(Purchase $Purchase){
+    public function destroy(Purchase $purchase){
 
-        $Purchase->delete();
+        $purchase->delete();
 
         return redirect()->route('purchases.index');//note 4
     }
     // Show the update view of the selected Purchase
-    public function edit( Purchase $Purchase){//note 3
+    public function edit( Purchase $purchase){//note 3
+        $sortedProducts = Product::orderBy('id', 'asc')->get();//note 5
+
+        // return $purchase->product_id;
+        // return $sortedProducts[42]->description;
+
         
-        return view('purchases.edit', compact('Purchase')); //note 3
+        return view('purchases.edit', compact('purchase', 'sortedProducts')); //note 3
     }
     // Update a Purchase from the list
-    public function update(validationPurchase $request, Purchase $Purchase){
-        $Purchase->update($request->all()); //note 2
+    public function update(validationPurchase $request, Purchase $purchase){
 
-        $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
-        return view('purchases.index', compact('purchases'));//note 2
+        $purchase->update($request->all()); //note 2
+
+        return redirect()->route('purchases.index');//note 4
     }
 
 }

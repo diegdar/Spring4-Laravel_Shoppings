@@ -29,7 +29,7 @@ class validationPurchase extends FormRequest
     public function rules(): array
     {
         return [//note 2
-            // 'purchase_date'=>'date',
+            'purchase_date'=>'date',
             'quantity'=>'required|decimal:0',
             'amount'=>'required|decimal:2',
             'supermarket'=>'required|string',
