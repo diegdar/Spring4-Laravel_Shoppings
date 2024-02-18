@@ -5,3 +5,40 @@
 .textValidation{
     color:red;
 }
+
+/* Posicionamiento fijo */
+.navigation {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+    }
+  }
+  
+  /* Centrar los enlaces */
+  .container {
+    width: 100%;
+    max-width: 960px;
+  }
+  
+  .mx-4 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  /* Opcional: estilos para los enlaces */
+  a {
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  a:hover {
+    color: #f0f0f0;
+  }
+  
