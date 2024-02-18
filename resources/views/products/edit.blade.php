@@ -51,7 +51,7 @@
                 Categoria del producto:
                 <br>
                 <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
-                    <option value="--">--Escoje un valor--</option>
+                    <option value="{{ old('category', $product->category) }}">{{$product->category}}</option>
                     <option value="Alimentacion">Alimentacion</option>
                     <option value="Limpieza">Limpieza</option>
                     <option value="Higiene personal">Higiene personal</option>
