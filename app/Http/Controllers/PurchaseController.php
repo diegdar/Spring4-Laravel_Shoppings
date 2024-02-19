@@ -29,12 +29,16 @@ class PurchaseController extends Controller
         $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
         // return $purchases;
        
+        return view('purchases.index', compact('purchases'));//note 2
+
+    }
+
+    public function create(){
         $sortedProducts = Product::orderBy('description')->get();//note 5
         // return $sortedProducts;
         $products = Product::all();//note 6
 
-        return view('purchases.index', compact('purchases','products', 'sortedProducts'));//note 2
-
+        return view('purchases.index', compact('products', 'sortedProducts'));//note 2
     }
     // create a new Purchase in the DB and show the Purchase list 
     public function store(validationPurchase $request){
