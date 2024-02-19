@@ -30,6 +30,7 @@ class validationProduct extends FormRequest
     {
         return [//note 2
             'description'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
+            'measurement_unit'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
             'unit_price'=>'required|decimal:2',
             'category'=>'required|string|in:Alimentacion,Limpieza,Higiene personal,Hogar',
         ];
@@ -41,6 +42,10 @@ class validationProduct extends FormRequest
                 'description.required'=> 'Este campo es obligatorio',
                 'description.min'=> 'Debe tener al menos 4 letras',
                 'description.regex'=> 'Se admite solo letras',
+            // measurement_unit
+                'measurement_unit.required'=> 'Este campo es obligatorio',
+                'measurement_unit.min'=> 'Debe tener al menos 4 letras',
+                'measurement_unit.regex'=> 'Se admite solo letras',
             // unit_price
                 'unit_price.required'=> 'Este campo es obligatorio',
                 'unit_price.decimal'=> 'Solo se admiten numeros con 2 decimales',

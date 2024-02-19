@@ -34,11 +34,12 @@ class PurchaseController extends Controller
     }
 
     public function create(){
+        // return $request;
         $sortedProducts = Product::orderBy('description')->get();//note 5
         // return $sortedProducts;
         $products = Product::all();//note 6
 
-        return view('purchases.index', compact('products', 'sortedProducts'));//note 2
+        return view('purchases.create', compact('products', 'sortedProducts'));//note 2
     }
     // create a new Purchase in the DB and show the Purchase list 
     public function store(validationPurchase $request){

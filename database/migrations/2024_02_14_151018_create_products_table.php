@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('description', 40);
             $table->decimal('unit_price');
+            $table->string('measurement_unit');
             $table->enum('category', ['Alimentacion','Limpieza','Higiene personal','Hogar']);
         });
     }

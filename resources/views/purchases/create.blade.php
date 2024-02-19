@@ -6,11 +6,11 @@
     --}}
 @extends('layouts.plantilla')
 
-@section('title', 'Lista Compras')
+@section('title', 'Crear Compra')
 
 @section('content')
 
-    <h1 class="text-6xl text-center text-red-500 my-4">Lista Productos Comprados</h1>
+    <h1 class="text-6xl text-center text-red-500 my-4">Crear Compra</h1>
     <table class="w-full flex items-center justify-center flex-grow-0">
         {{-- Table header rows --}}
             <tr>

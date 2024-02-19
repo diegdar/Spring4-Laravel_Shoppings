@@ -20,3 +20,5 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::resource('products', ProductController::class);
 Route::resource('purchases', PurchaseController::class);
+
+// Route::post('purchases', [PurchaseController::class, 'preCreate'])->name('purchases.preCreate');

@@ -29,7 +29,7 @@ class validationPurchase extends FormRequest
     public function rules(): array
     {
         return [//note 2
-            'purchase_date'=>'date',
+            'purchase_date'=>'required|date',
             'quantity'=>'required|decimal:0',
             'amount'=>'required|decimal:2',
             'supermarket'=>'required|string',
@@ -40,6 +40,7 @@ class validationPurchase extends FormRequest
     {
         return[
             // purchase_date
+                'purchase_date.required'=>'Este campo es obligatorio',
                 'purchase_date.date'=>'Formato fecha admitido: dd/mm/aaaa',
             // quantity
                 'quantity.required'=> 'Este campo es obligatorio',
