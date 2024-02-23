@@ -7,18 +7,19 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 /*
 🗒️NOTES:
-1: compact('products'): it is the array that we collect in the variable $products
-2: Mass assignment to insert/update records: Creates an instance of the product class and will pass the values received in the form to the 'description', 'unit_price' and 'category' fields and will also save these records in the DB internally with the save() method so it is better than passing the data one by one manually.
-     ⚠️for it to work you must configure an attribute with the name $fillable or $guarded in the product Class.
-3: we collect the selected product to edit.
-     passes the fields of the selected product into view.
+1: compact('productos'): es el array que recogemos en la variable $productos
+2: Asignación masiva para insertar/actualizar registros: Crea una instancia de la clase de producto y pasará los valores recibidos en el formulario a los campos 'descripción', 'precio_unitario' y 'categoría' y también guardará estos registros en la base de datos internamente con el método save() por lo que es mejor que pasar los datos uno por uno manualmente.
+      ⚠️para que funcione debes configurar un atributo con el nombre $fillable o $guarded en la Clase del producto.
+3: recogemos el producto seleccionado para editar.
+      pasa a la vista los campos del producto seleccionado.
 
-4: After deleting it will redirect the user to the list of records.
+4: Después de eliminarlo, se redirigirá al usuario a la lista de registros.
+
 */
 
 class ProductController extends Controller
 {
-    // Show the products list
+    // Muestra la lista de productos
     public function index(){
 
         $products = Product::orderBy('id', 'desc')->paginate(); //note 1
@@ -26,7 +27,8 @@ class ProductController extends Controller
 
         // return $products;
     }
-    // create a new product in the DB and show the product list 
+
+    // Crea un nuevo producto en la BD y muestra la lisa de productos 
     public function store(validationProduct $request){
         // return $request;
 
@@ -35,19 +37,24 @@ class ProductController extends Controller
         $products = Product::orderBy('id', 'desc')->paginate(); //note 1
         return view('products.index', compact('products'));//note 2
     }
-    // Delete a product in the DB and show the product list
+
+    // Borra un producto de la lista de productos
     public function destroy(Product $product){
+
+        // return $product;
 
         $product->delete();
 
         return redirect()->route('products.index');//note 4
     }
-    // Show the update view of the selected product
+
+    // Muestra la vista para editar el producto seleccionado
     public function edit( Product $product){//note 3
         
         return view('products.edit', compact('product')); //note 3
     }
-    // Update a product from the list
+
+    // Actuliza el producto seleccionado
     public function update(validationProduct $request, Product $product){
         $product->update($request->all()); //note 2
 

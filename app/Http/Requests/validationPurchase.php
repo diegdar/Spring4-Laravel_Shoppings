@@ -29,24 +29,15 @@ class validationPurchase extends FormRequest
     public function rules(): array
     {
         return [//note 2
-            'purchase_date'=>'date',
-            'quantity'=>'required|decimal:0',
-            'amount'=>'required|decimal:2',
+            'purchase_date'=>'required',
             'supermarket'=>'required|string',
-            'product_id'=>'required|string',
         ];
     }
     public function messages(): array //note 3 
     {
         return[
             // purchase_date
-                'purchase_date.date'=>'Formato fecha admitido: dd/mm/aaaa',
-            // quantity
-                'quantity.required'=> 'Este campo es obligatorio',
-                'quantity.decimal'=> 'Solo se admite numeros enteros',
-            // amount
-                'amount.required'=> 'Este campo es obligatorio',
-                'amount.decimal'=> 'Solo se admite numeros con 2 decimales',
+                'purchase_date.required'=>'Este campo es obligatorio',
             // supermarket
                 'supermarket.required'=> 'Este campo es obligatorio',
                 'supermarket.string'=> 'Se admite solo letras',

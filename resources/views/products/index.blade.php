@@ -13,9 +13,10 @@
     <table class="flex items-center justify-center">
         {{-- Table header rows --}}
         <tr>
-            <th>descripcion Producto</th>
-            <th>precio unitario</th>
-            <th>categoria</th>
+            <th>Descripcion Producto</th>
+            <th>Precio unitario</th>
+            <th>Unidad de medida</th>
+            <th>Categoria</th>
         </tr>
         <tr>
             {{-- Data insertion rows --}}
@@ -34,6 +35,15 @@
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
                         <input type="text" class="h-9" name="unit_price" style="text-align: center;">
                         @error('unit_price')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
+                </td>
+                <td>
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <input type="text" class="h-9" name="measurement_unit" style="text-align: center;">
+                        @error('measurement_unit')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
                         @enderror
@@ -68,6 +78,9 @@
                 </td>
                 <td class="text-center">
                     {{ $product->unit_price }}
+                </td>
+                <td class="text-center">
+                    {{ $product->measurement_unit }}
                 </td>
                 <td class="text-center">
                     {{ $product->category }}
