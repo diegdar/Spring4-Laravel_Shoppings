@@ -123,7 +123,7 @@
                             {{ $productPurchase->quantity }}
                         </td>
                         <td class="text-center">
-                            {{ $productPurchase->quantity * $productPurchase->unit_price }}
+                            {{ $productPurchase->import }}
                         </td>
                         <td class="text-center">
                             {{ $products[$productPurchase->product_id - 1]->measurement_unit }}

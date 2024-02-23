@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\validationProductPurchase;
 use App\Models\Product;
 use App\Models\ProductPurchase;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 
 class ProductPurchaseController extends Controller
@@ -24,15 +25,27 @@ class ProductPurchaseController extends Controller
         $supermarket = $request->supermarket;
 
         if ($existingPurchase) {
-            $productsPurchases = ProductPurchase::all(); // Obtiene todas las compras de productos
+            $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id mostrando la mas reciente primero
         } else {
+            $import = $request->quantity * $request->unit_price;
+
             $productPurchase = ProductPurchase::create([
                 'purchase_id' => $request->purchase_id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
                 'unit_price' => $request->unit_price,
+                'import' => $import,
             ]);
-            $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id
+
+            $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); 
+            // Obtiene el registro de la compra por su id
+            $record = Purchase::find($purchase_id);
+            // Actualizar el valor del campo
+            $record->total_import += $import;
+
+            // Guardar los cambios en la BBDD
+            $record->save();
+
         }
 
         return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));

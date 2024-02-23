@@ -41,7 +41,7 @@ class ProductController extends Controller
     // Borra un producto de la lista de productos
     public function destroy(Product $product){
 
-        return $product;
+        // return $product;
 
         $product->delete();
 

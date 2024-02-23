@@ -62,7 +62,7 @@
                     {{ $purchase->supermarket }}
                 </td>
                 <td class="text-center">
-                    ⚠️:falta importe total
+                    {{ $purchase->total_import }}
                 </td>
                 {{-- Delete button --}}
                 <td class="py-2 px-4">

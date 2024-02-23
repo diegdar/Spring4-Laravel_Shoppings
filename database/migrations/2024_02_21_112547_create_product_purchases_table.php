@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('quantity');
             $table->decimal('unit_price');
+            $table->decimal('import');
             $table->foreignId('product_id')
                 ->nullable()
                 ->constrained('products')
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_purchase');
+        Schema::dropIfExists('product_purchases');
     }
 };

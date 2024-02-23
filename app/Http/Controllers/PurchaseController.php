@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\validationPurchase;
 use App\Models\Purchase;
 use App\Models\Product;
+use App\Models\ProductPurchase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 /*
 🗒️NOTES:
-1: compact('purchases'): it is the array that we collect in the variable $purchases
-2: Mass assignment to insert/update records: Creates an instance of the Purchase class and will pass the values received in the form to the 'description', 'unit_price' and 'category' fields and will also save these records in the DB internally with the save() method so it is better than passing the data one by one manually.
-     ⚠️for it to work you must configure an attribute with the name $fillable or $guarded in the Purchase Class.
-3: we collect the selected Purchase to edit.
-     passes the fields of the selected Purchase into view.
+1: compact('compras'): es el array que recogemos en la variable $compras
+2: Asignación masiva para insertar/actualizar registros: Crea una instancia de la clase Compra y pasará los valores recibidos en el formulario a los campos 'descripción', 'precio_unitario' y 'categoría' y también guardará estos registros en la base de datos internamente con el método save() por lo que es mejor que pasar los datos uno por uno manualmente.
+      ⚠️para que funcione debes configurar un atributo con el nombre $fillable o $guarded en la Clase de Compra.
+3: recogemos la Compra seleccionada para editar.
+      pasa a la vista los campos de la Compra seleccionada.
 
-4: After the method action is done we redirect the user to the list of the records.
-5: Get all products sorted alphabetically by description.
-6: We need as well all the products unsorted by description to match the 'id_product' and the position in the array $products
+4: Una vez realizada la acción del método, redirigimos al usuario a la lista de registros.
+5: Ordene todos los productos alfabéticamente por descripción.
+6: Necesitamos también que todos los productos sin clasificar por descripción coincidan con el 'id_product' y la posición en la matriz $products
+
 */
 
 class PurchaseController extends Controller
@@ -28,8 +30,10 @@ class PurchaseController extends Controller
 
         $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
         // return $purchases;
+
+        $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id mostrando la mas reciente primero
        
-        return view('purchases.index', compact('purchases'));//note 2
+        return view('purchases.index', compact('purchases', 'productsPurchases'));//note 2
 
     }
 
