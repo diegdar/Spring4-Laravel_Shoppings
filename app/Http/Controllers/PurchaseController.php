@@ -33,49 +33,37 @@ class PurchaseController extends Controller
 
     }
 
-    public function create(){
-        // return $request;
+    // crea una nueva Compra en la BD y muestra la lista de Compras
+    public function store(validationPurchase $request){
+        $createdPurchase = Purchase::create($request->all());
+        // return $createdPurchase;
+
         $sortedProducts = Product::orderBy('description')->get();//note 5
         // return $sortedProducts;
         $products = Product::all();//note 6
 
-        return view('purchases.create', compact('products', 'sortedProducts'));//note 2
-    }
-    // create a new Purchase in the DB and show the Purchase list 
-    public function store(validationPurchase $request){
-        $purchase_date = $request->purchase_date;
+        return view('products_purchases.create', compact('products', 'sortedProducts', 'createdPurchase'));//note 2
         
-        try {
-            $date = Carbon::createFromFormat('d/m/Y', $purchase_date)->format('Y-m-d');
-        } catch (\Exception $e) {
-            // Manejar el error de formato de fecha
-            return back()->withInput()->withErrors(['purchase_date' => 'Formato de fecha inválido']);
-        }
-    
-        $data = $request->all();
-        $data['purchase_date'] = $date;
-    
-        Purchase::create($data);
-        
-        return redirect()->route('purchases.index');
-    }    // Delete a Purchase in the DB and show the Purchase list
+        // return view('products_purchases.create');//note 2
+    }   
+
+    // Elimina una Compra en la BD y muestra la lista de Compras
     public function destroy(Purchase $purchase){
 
         $purchase->delete();
 
         return redirect()->route('purchases.index');//note 4
     }
-    // Show the update view of the selected Purchase
+    
+    // Muestra la vista de actualización de la Compra seleccionada
     public function edit( Purchase $purchase){//note 3
         $sortedProducts = Product::orderBy('id', 'asc')->get();//note 5
 
         // return $purchase->product_id;
-        // return $sortedProducts[42]->description;
-
         
         return view('purchases.edit', compact('purchase', 'sortedProducts')); //note 3
     }
-    // Update a Purchase from the list
+    // Actualiza la compra que se selecciono
     public function update(validationPurchase $request, Purchase $purchase){
 
         $purchase->update($request->all()); //note 2

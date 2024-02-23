@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('products', function(Blueprint $table){
             $table->id();
             $table->string('description', 40);
-            $table->decimal('unit_price');
-            $table->string('measurement_unit');
+            $table->string('measurement_unit', 15);
             $table->enum('category', ['Alimentacion','Limpieza','Higiene personal','Hogar']);
         });
     }

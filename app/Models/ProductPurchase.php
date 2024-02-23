@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductPurchase extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    protected $guarded = [];//note 1
+
 }

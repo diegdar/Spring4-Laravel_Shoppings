@@ -9,28 +9,48 @@
 @section('title', 'Lista Compras')
 
 @section('content')
-@php
-use Carbon\Carbon;
-@endphp
+    @php
+        use Carbon\Carbon;
+    @endphp
 
     <h1 class="text-6xl text-center text-red-500 my-4">Lista Productos Comprados</h1>
     <table class="w-full flex items-center justify-center flex-grow-0">
         {{-- Table header rows --}}
-            <tr>
-                <th class="w-48">Nº Compra</th>
-                <th class="w-48">Fecha Compra</th>
-                <th class="w-48">Supermercado</th>
-                <th class="w-48">Importe Total</th>
-                <th>
-                    <a href="{{ route('purchases.create') }}">
-                        <input type='button' value='Crear nueva Compra'
-                            class='bg-blue-700 text-white px-4 py-2 m-3 rounded hover:bg-blue-500 my-2'>
-                    </a>
-                </th>
-            </tr>
-            <tr>
-                {{-- List purchases already created --}}
-                @foreach ($purchases as $purchase)
+        <tr>
+            <th class="w-48">Nº Compra</th>
+            <th class="w-48">Fecha Compra</th>
+            <th class="w-48">Supermercado</th>
+            <th class="w-48">Importe Total</th>
+        </tr>
+        <tr>
+            {{-- Data insertion Purchase rows --}}
+            <form action="{{ route('purchases.store') }}" method="POST">
+                @csrf{{-- note 1 --}}
+                <td class='py-2 px-4'><input type='submit' value='Crear nueva Compra' class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300'>
+                </td>
+                <td>
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <input type="date" class="h-9" name="purchase_date" style="text-align: center;">
+                        @error('purchase_date')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
+                </td>
+                <td>
+                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
+                        <input type="text" class="h-9" name="supermarket" style="text-align: center;">
+                        @error('supermarket')
+                            {{-- note 2 --}}
+                            <span class="textValidation">*{{ $message }}</span>
+                        @enderror
+                    </div>
+                </td>
+            </form>
+        </tr>
+        </form>
+        {{-- List purchases already created --}}
+        @foreach ($purchases as $purchase)
             <tr>
                 <td class="text-center">
                     {{ $purchase->id }}
@@ -60,7 +80,7 @@ use Carbon\Carbon;
                             class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500'>
                     </a>
             </tr>
-            @endforeach
+        @endforeach
     </table>
     {{ $purchases->links() }}
 @endsection

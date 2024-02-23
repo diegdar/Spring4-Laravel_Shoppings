@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_purchase', function (Blueprint $table) {
+        Schema::create('product_purchases', function (Blueprint $table) {
             $table->id();
+            $table->integer('quantity');
+            $table->decimal('unit_price');
             $table->foreignId('product_id')
                 ->nullable()
                 ->constrained('products')

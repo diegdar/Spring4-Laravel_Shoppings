@@ -4,12 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 /*
-🗒️NOTES:
-1: This authorize() method is used to indicate which users have access but this can already be handled with the policies so it is better to leave the return true.
-2: validates the data received by the form.
-3: Customize validation messages.
-4: Customize the attribute names on the form.
-*/
+🗒️NOTAS:
+1: Este método Authorize() se utiliza para indicar qué usuarios tienen acceso, pero esto ya se puede manejar con las políticas, por lo que es mejor dejar la devolución verdadera.
+2: valida los datos recibidos por el formulario.
+3: Personaliza los mensajes de validación.
+4: Personalice los nombres de los atributos en el formulario.*/
 
 class validationProduct extends FormRequest
 {
@@ -18,7 +17,7 @@ class validationProduct extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;// note 1
+        return true;// nota 1
     }
 
     /**
@@ -28,14 +27,14 @@ class validationProduct extends FormRequest
      */
     public function rules(): array
     {
-        return [//note 2
+        return [//nota 2
             'description'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
-            'measurement_unit'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
+            'measurement_unit'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|max:15',
             'unit_price'=>'required|decimal:2',
             'category'=>'required|string|in:Alimentacion,Limpieza,Higiene personal,Hogar',
         ];
     }
-    public function messages(): array //note 3 
+    public function messages(): array //nota 3 
     {
         return[
             // description
@@ -44,7 +43,7 @@ class validationProduct extends FormRequest
                 'description.regex'=> 'Se admite solo letras',
             // measurement_unit
                 'measurement_unit.required'=> 'Este campo es obligatorio',
-                'measurement_unit.min'=> 'Debe tener al menos 4 letras',
+                'measurement_unit.max'=> 'Como maximo se aceptan 15 caracteres',
                 'measurement_unit.regex'=> 'Se admite solo letras',
             // unit_price
                 'unit_price.required'=> 'Este campo es obligatorio',
@@ -55,7 +54,7 @@ class validationProduct extends FormRequest
                 'category.in'=> 'Debes escoger un valor',
         ];
     }
-    public function attributes():array//note 4 
+    public function attributes():array//nota 4 
     {
         return[
             'description'=>'descripcion del producto',
