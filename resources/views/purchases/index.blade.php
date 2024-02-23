@@ -76,7 +76,7 @@
                 {{-- Update button --}}
                 <td>
                     <a href="{{ route('purchases.edit', $purchase->id) }}">
-                        <input type='button' name='up' id='up' value='Actualizar'
+                        <input type='button' name='up' id='up' value='Editar'
                             class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500'>
                     </a>
             </tr>

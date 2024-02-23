@@ -31,8 +31,7 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="date" style="text-align: center;" id="purchase_date"
-                            value="{{ isset($createdPurchase->id) ? $createdPurchase->purchase_date : $purchase_date }}"
+                        <input type="date" style="text-align: center;" value="{{ isset($createdPurchase->id) ? $createdPurchase->purchase_date : $purchase_date }}"
                             name="purchase_date" readonly>
                     </div>
                 </td>

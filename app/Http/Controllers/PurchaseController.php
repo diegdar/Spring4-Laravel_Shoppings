@@ -40,7 +40,7 @@ class PurchaseController extends Controller
     // crea una nueva Compra en la BD y muestra la lista de Compras
     public function store(validationPurchase $request){
         $createdPurchase = Purchase::create($request->all());
-        // return $createdPurchase;
+        // var_dump($createdPurchase);
 
         $sortedProducts = Product::orderBy('description')->get();//note 5
         // return $sortedProducts;
@@ -48,7 +48,6 @@ class PurchaseController extends Controller
 
         return view('products_purchases.create', compact('products', 'sortedProducts', 'createdPurchase'));//note 2
         
-        // return view('products_purchases.create');//note 2
     }   
 
     // Elimina una Compra en la BD y muestra la lista de Compras
@@ -61,18 +60,19 @@ class PurchaseController extends Controller
     
     // Muestra la vista de actualización de la Compra seleccionada
     public function edit( Purchase $purchase){//note 3
-        $sortedProducts = Product::orderBy('id', 'asc')->get();//note 5
 
-        // return $purchase->product_id;
+        // Formatea la fecha a YYYY-MM-DD para que se visualice en el formulario de la vista
+        $purchase->purchase_date = Carbon::parse($purchase->purchase_date)->format('Y-m-d');
         
-        return view('purchases.edit', compact('purchase', 'sortedProducts')); //note 3
+        return view('purchases.edit', compact('purchase')); //note 3
     }
+    
     // Actualiza la compra que se selecciono
     public function update(validationPurchase $request, Purchase $purchase){
 
         $purchase->update($request->all()); //note 2
 
-        return redirect()->route('purchases.index');//note 4
+        return view('purchases.edit', compact('purchase')); //note 3
     }
 
 }
