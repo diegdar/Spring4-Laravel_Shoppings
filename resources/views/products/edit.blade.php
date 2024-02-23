@@ -13,59 +13,55 @@
 
 @section('content')
     <h1 class="text-4xl	text-red-500 font-semibold">Edicion del producto:</h1>
-    <a href="{{ route('products.index', $product->id) }}">
-        <input type='button' value='Volver a lista productos'
-            class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500 my-2'>
-    </a>
-        {{-- note 1 --}}
-        <form action="{{ route('products.update', $product->id) }}" method="post" class="my-5 mx-3">
-            @csrf {{-- note 2 --}}
-            @method('put'){{-- note 3 --}}
-            <label>
-                Descripcion producto:
-            </label>
+    {{-- note 1 --}}
+    <form action="{{ route('products.update', $product->id) }}" method="post" class="my-5 mx-3">
+        @csrf {{-- note 2 --}}
+        @method('put'){{-- note 3 --}}
+        <label>
+            Descripcion producto:
+        </label>
+        <br>
+        <input type="text" name="description" class="h-9 w-27"
+            value="{{ old('description', $product->description) }}" style="text-align: center">{{-- note 5 --}}
+        @error('description')
+            {{-- note 4 --}}
             <br>
-            <input type="text" name="description" class="h-9 w-27"
-                value="{{ old('description', $product->description) }}">{{-- note 5 --}}
-            @error('description')
-                {{-- note 4 --}}
+            <span class="textValidation">*{{ $message }}</span>
+            <br>
+        @enderror
+        <br>
+        <label>
+            Unidad de medida:
+        </label>
+        <br>
+        <input type="text" name="measurement_unit" class="h-9 w-27"
+            value="{{ old('measurement_unit', $product->measurement_unit) }}" style="text-align: center">{{-- note 5 --}}
+        @error('measurement_unit')
+            {{-- note4 --}}
+            <br>
+            <span class="textValidation">*{{ $message }}</span>
+            <br>
+        @enderror
+        <br>
+        <label>
+            Categoria del producto:
+            <br>
+            <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
+                <option value="{{ old('category', $product->category) }}">{{ $product->category }}</option>
+                <option value="Alimentacion">Alimentacion</option>
+                <option value="Limpieza">Limpieza</option>
+                <option value="Higiene personal">Higiene personal</option>
+                <option value="Hogar">Hogar</option>
+            </select>
+            @error('category')
+                {{-- note 2 --}}
                 <br>
                 <span class="textValidation">*{{ $message }}</span>
-                <br>
             @enderror
             <br>
-            <label>
-                Precio unitario del producto:
-            </label>
-            <br>
-            <input type="text" name="unit_price" class="h-9 w-27"
-                value="{{ old('unit_price', $product->unit_price) }}">{{-- note 5 --}}
-            @error('unit_price')
-                {{-- note4 --}}
-                <br>
-                <span class="textValidation">*{{ $message }}</span>
-                <br>
-            @enderror
-            <br>
-            <label>
-                Categoria del producto:
-                <br>
-                <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
-                    <option value="{{ old('category', $product->category) }}">{{$product->category}}</option>
-                    <option value="Alimentacion">Alimentacion</option>
-                    <option value="Limpieza">Limpieza</option>
-                    <option value="Higiene personal">Higiene personal</option>
-                    <option value="Hogar">Hogar</option>
-                </select>
-                @error('category')
-                    {{-- note 2 --}}
-                    <br>
-                    <span class="textValidation">*{{ $message }}</span>
-                @enderror
-                <br>
-                <button type="submit" class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300 my-3'>Actualizar
-                    producto</button>
-        </form>
+            <button type="submit" class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300 my-3'>Actualizar
+                producto</button>
+    </form>
 
 
-    @endsection
+@endsection
