@@ -10,7 +10,6 @@
 
 @section('content')
 
-    <h1 class="text-6xl text-center text-red-500 my-4">Crear Compra</h1>
     {{-- Data insertion rows --}}
     <form action="{{ route('productPurchases.store') }}" method="POST">
         @csrf{{-- note 1 --}}
@@ -31,7 +30,8 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="date" style="text-align: center;" value="{{ isset($createdPurchase->id) ? $createdPurchase->purchase_date : $purchase_date }}"
+                        <input type="date" style="text-align: center;"
+                            value="{{ isset($createdPurchase->id) ? $createdPurchase->purchase_date : $purchase_date }}"
                             name="purchase_date" readonly>
                     </div>
                 </td>
@@ -44,9 +44,6 @@
                             value="{{ isset($createdPurchase->id) ? $createdPurchase->supermarket : $supermarket }}"
                             name="supermarket" readonly>
                     </div>
-                </td>
-                <td class='py-2 px-4'><input type='submit' value='Insertar producto'
-                        class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300'>
                 </td>
             </tr>
             <tr>
@@ -88,9 +85,14 @@
                         @enderror
                     </div>
                 </td>
+                <td class='py-2 px-4'><input type='submit' value='Insertar producto'
+                        class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300'>
+                </td>
             </tr>
         </table>
     </form>
+    <h1 class="text-6xl text-center text-red-500 my-4">Productos de la compra: </h1>
+
     {{-- Products Table --}}
     <table class="w-full flex items-center justify-center flex-grow-0">
         {{-- Table header rows --}}

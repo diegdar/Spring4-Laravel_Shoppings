@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('purchases', function (Blueprint $table) {
-            $table->decimal('total_import', 8, 2)->default(0)->after('purchase_date');
+        Schema::table('product_purchases', function (Blueprint $table) {
+            $table->decimal('import', 8, 2)->default(0)->change();//cambia el campo para que tenga por defecto un valor 0 en lugar de null
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('purchases', function (Blueprint $table) {
-            $table->dropColumn('total_import'); 
+        Schema::table('product_purchases', function (Blueprint $table) {
+            //
         });
     }
 };

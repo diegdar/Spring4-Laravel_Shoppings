@@ -46,7 +46,7 @@ class PurchaseController extends Controller
         // return $sortedProducts;
         $products = Product::all();//note 6
 
-        return view('products_purchases.create', compact('products', 'sortedProducts', 'createdPurchase'));//note 2
+        return view('products_purchases.create', compact('products','sortedProducts', 'createdPurchase'));//note 2
         
     }   
 
@@ -72,7 +72,19 @@ class PurchaseController extends Controller
 
         $purchase->update($request->all()); //note 2
 
-        return view('purchases.edit', compact('purchase')); //note 3
+        // return $purchase;
+
+        $purchase_id = $purchase->id;
+        $purchase_date = $purchase->purchase_date;
+        $supermarket = $purchase->supermarket;
+
+        $sortedProducts = Product::orderBy('description')->get();//note 5
+        // return $sortedProducts;
+        $products = Product::all();//note 6
+
+        $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); 
+
+        return view('products_purchases.create', compact('products','sortedProducts', 'purchase_id', 'purchase_date',        'supermarket', 'productsPurchases'));//note 2
     }
 
 }
