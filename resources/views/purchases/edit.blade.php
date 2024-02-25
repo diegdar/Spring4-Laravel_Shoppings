@@ -17,9 +17,14 @@
     {{-- Data insertion rows --}}
     <form action="{{ route('purchases.update', $purchase->id) }}" method="POST">
         @csrf{{-- note 1 --}}
-        <table>
+        <table class="w-full flex items-center justify-center flex-grow-0">
             @method('put'){{-- note 3 --}}
             <tr>
+                <td>
+                    <input type="hidden" style="text-align: center;"
+                    value="{{ $purchase->id}}"
+                    name="purchase_date">
+                </td>
                 <td>
                     <label for="purchase_date">Fecha Compra:</label>
                 </td>

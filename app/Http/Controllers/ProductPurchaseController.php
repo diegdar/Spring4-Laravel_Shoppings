@@ -12,6 +12,8 @@ class ProductPurchaseController extends Controller
 {
     public function store(validationProductPurchase $request)
     {
+        
+        return $request;
         // Verifica si ya existe una compra con el mismo purchase_id y product_id
         $existingPurchase = ProductPurchase::where('purchase_id', $request->purchase_id)
             ->where('product_id', $request->product_id)

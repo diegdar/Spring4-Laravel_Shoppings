@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="date" class="h-9" name="purchase_date" style="text-align: center;">
+                        <input type="date" class="h-9" name="purchase_date" style="text-align: center;" >
                         @error('purchase_date')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
