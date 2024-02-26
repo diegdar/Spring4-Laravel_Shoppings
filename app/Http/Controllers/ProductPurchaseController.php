@@ -12,6 +12,8 @@ class ProductPurchaseController extends Controller
 {
     public function store(validationProductPurchase $request)
     {
+        
+        return $request;
         // Verifica si ya existe una compra con el mismo purchase_id y product_id
         $existingPurchase = ProductPurchase::where('purchase_id', $request->purchase_id)
             ->where('product_id', $request->product_id)
@@ -51,17 +53,17 @@ class ProductPurchaseController extends Controller
         return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));
     }
 
-    public function destroy(ProductPurchase $productPurchase, Request $request)
+    public function destroy(ProductPurchase $productPurchase, Request $purchase)
     {
-        $purchase_id = $request->purchase_id;
-        $purchase_date = $request->purchase_date;
-        $supermarket = $request->supermarket;
-
         $productPurchase->delete(); // Elimina la compra de producto
 
         $products = Product::all(); // Obtiene todos los productos
         $sortedProducts = Product::orderBy('description')->get(); // Obtiene los productos ordenados por descripción
         $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id
+
+        $purchase_id = $purchase->purchase_id;
+        $purchase_date = $purchase->purchase_date;
+        $supermarket = $purchase->supermarket;
 
         return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));
     }

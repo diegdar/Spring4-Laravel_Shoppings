@@ -13,7 +13,7 @@
         use Carbon\Carbon;
     @endphp
 
-    <h1 class="text-6xl text-center text-red-500 my-4">Lista Productos Comprados</h1>
+    <h1 class="text-6xl text-center text-red-500 my-4">Compras hechas</h1>
     <table class="w-full flex items-center justify-center flex-grow-0">
         {{-- Table header rows --}}
         <tr>
@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="date" class="h-9" name="purchase_date" style="text-align: center;">
+                        <input type="date" class="h-9" name="purchase_date" style="text-align: center;" >
                         @error('purchase_date')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
@@ -76,7 +76,7 @@
                 {{-- Update button --}}
                 <td>
                     <a href="{{ route('purchases.edit', $purchase->id) }}">
-                        <input type='button' name='up' id='up' value='Actualizar'
+                        <input type='button' name='up' id='up' value='Editar'
                             class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500'>
                     </a>
             </tr>
