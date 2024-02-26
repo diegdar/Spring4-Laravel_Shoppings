@@ -30,7 +30,6 @@ class validationProduct extends FormRequest
         return [//nota 2
             'description'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|min:4',
             'measurement_unit'=>'required|regex:/^[a-zA-Zñáéíóú]+$/|max:15',
-            'unit_price'=>'required|decimal:2',
             'category'=>'required|string|in:Alimentacion,Limpieza,Higiene personal,Hogar',
         ];
     }
@@ -45,9 +44,6 @@ class validationProduct extends FormRequest
                 'measurement_unit.required'=> 'Este campo es obligatorio',
                 'measurement_unit.max'=> 'Como maximo se aceptan 15 caracteres',
                 'measurement_unit.regex'=> 'Se admite solo letras',
-            // unit_price
-                'unit_price.required'=> 'Este campo es obligatorio',
-                'unit_price.decimal'=> 'Solo se admiten numeros con 2 decimales',
             // category
                 'category.required'=> 'Este campo es obligatorio',
                 'category.string'=> 'Se admite solo letras',

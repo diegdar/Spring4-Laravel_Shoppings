@@ -13,8 +13,8 @@
     <table class="flex items-center justify-center">
         {{-- Table header rows --}}
         <tr>
+            <th>Ref. Producto</th>
             <th>Descripcion Producto</th>
-            <th>Precio unitario</th>
             <th>Unidad de medida</th>
             <th>Categoria</th>
         </tr>
@@ -22,9 +22,11 @@
             {{-- Data insertion rows --}}
             <form action="{{ route('products.store') }}" method="POST">
                 @csrf{{-- note 1 --}}
+                <td></td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="description" style="text-align: center;">
+                        <input type="text" class="h-9" name="description" style="text-align: center;"
+                            value="{{ old('description') }}">
                         @error('description')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
@@ -33,16 +35,8 @@
                 </td>
                 <td>
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="unit_price" style="text-align: center;">
-                        @error('unit_price')
-                            {{-- note 2 --}}
-                            <span class="textValidation">*{{ $message }}</span>
-                        @enderror
-                    </div>
-                </td>
-                <td>
-                    <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                        <input type="text" class="h-9" name="measurement_unit" style="text-align: center;">
+                        <input type="text" class="h-9" name="measurement_unit" style="text-align: center;"
+                            value="{{ old('measurement_unit') }}">
                         @error('measurement_unit')
                             {{-- note 2 --}}
                             <span class="textValidation">*{{ $message }}</span>
@@ -53,10 +47,15 @@
                     <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
                         <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
                             <option value="--">--Escoje un valor--</option>
-                            <option value="Alimentacion">Alimentacion</option>
-                            <option value="Limpieza">Limpieza</option>
-                            <option value="Higiene personal">Higiene personal</option>
-                            <option value="Hogar">Hogar</option>
+                            <option value="Alimentacion" {{ old('category') === 'Alimentacion' ? 'selected' : '' }}>
+                                Alimentacion
+                            </option>
+                            <option value="Limpieza" {{ old('category') === 'Limpieza' ? 'selected' : '' }}>Limpieza
+                            </option>
+                            <option value="Higiene personal" {{ old('category') === 'Higiene personal' ? 'selected' : '' }}>
+                                Higiene personal
+                            </option>
+                            <option value="Hogar" {{ old('category') === 'Hogar' ? 'selected' : '' }}>Hogar</option>
                         </select>
                         @error('category')
                             {{-- note 2 --}}
@@ -69,15 +68,14 @@
                 </td>
             </form>
         </tr>
-        </form>
         {{-- List products already created --}}
         @foreach ($products as $product)
             <tr>
                 <td class="text-center">
-                    {{ $product->description }}
+                    {{ $product->id }}
                 </td>
                 <td class="text-center">
-                    {{ $product->unit_price }}
+                    {{ $product->description }}
                 </td>
                 <td class="text-center">
                     {{ $product->measurement_unit }}
@@ -90,16 +88,17 @@
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                         @csrf{{-- note 1 --}}
                         @method('delete'){{-- note 2 --}}
-                        <button type="submit" onclick="return confirmDelete('{{ $product->description }}')"
+                        <button type="submit" onclick="return confirmDelete('{{ $product->id }}')"
                             class='bg-red-500 text-white mt-4 px-8 py-2 rounded hover:bg-red-300'>Borrar</button>
                     </form>
                 </td class="py-2 px-4">
                 {{-- Update button --}}
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}">
-                        <input type='button' name='up' id='up' value='Actualizar'
+                        <input type='button' name='up' id='up' value='Editar'
                             class='bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-500'>
                     </a>
+                </td>
             </tr>
         @endforeach
     </table>
@@ -107,7 +106,7 @@
 @endsection
 
 <script>
-    function confirmDelete(productDescription) {
-        return confirm("¿Estás seguro de que deseas borrar el producto: " + productDescription + "?");
+    function confirmDelete(idProduct) {
+        return confirm("¿Estás seguro de que deseas borrar con la referencia Nº: " + idProduct + "?");
     }
 </script>
