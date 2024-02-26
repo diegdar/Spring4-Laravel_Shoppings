@@ -91,8 +91,10 @@
                 </tr>
             </table>
         </form>
-        <h1 class="text-6xl text-center text-red-500 my-4">Productos de la compra: </h1>
-    
+        <h1 class="text-5xl text-center text-red-500 my-4">
+            Importe Total productos añadidos: 
+            {{ number_format(isset($totalImport) ? $totalImport : 0, 2, ',', '.') }}€
+        </h1>    
         {{-- Products Table --}}
         <table class="w-full flex items-center justify-center flex-grow-0">
             {{-- Table header rows --}}
