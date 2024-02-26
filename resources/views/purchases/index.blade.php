@@ -62,7 +62,7 @@
                     {{ $purchase->supermarket }}
                 </td>
                 <td class="text-center">
-                    {{ $purchase->total_import }}
+                    {{ number_format($purchase->total_import, 2, ',', '.') }}€
                 </td>
                 {{-- Delete button --}}
                 <td class="py-2 px-4">

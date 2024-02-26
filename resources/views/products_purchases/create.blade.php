@@ -22,7 +22,7 @@
                         <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
                             <input type="text" style="text-align: center;" id="purchase_id"
                                 value="{{ isset($createdPurchase->id) ? $createdPurchase->id : $purchase_id }}" 
-                                readonly>
+                                readonly name="purchase_id">
                         </div>
                     </td>
                     <td>
@@ -42,7 +42,7 @@
                         <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
                             <input type="text" style="text-align: center;" id="supermarket"
                                 value="{{ isset($createdPurchase->id) ? $createdPurchase->supermarket : $supermarket }}"
-                                 readonly>
+                                 readonly name="supermarket">
                         </div>
                     </td>
                 </tr>
@@ -78,7 +78,7 @@
                     </td>
                     <td>
                         <div class='px-4 py-2 border border-blue-200 rounded flex flex-col'>
-                            <input type="text" style="text-align: center;" name="unit_price" id="unit_price">
+                            <input type="decimal" style="text-align: center;" name="unit_price" id="unit_price">
                             @error('unit_price')
                                 {{-- note 2 --}}
                                 <span class="textValidation">*{{ $message }}</span>
@@ -118,13 +118,13 @@
                                 {{ $products[$productPurchase->product_id - 1]->description }}
                             </td>
                             <td class="text-center">
-                                {{ $productPurchase->unit_price }}
+                                {{ number_format($productPurchase->unit_price, 2, ',', '.') }}€
                             </td>
                             <td class="text-center">
                                 {{ $productPurchase->quantity }}
                             </td>
                             <td class="text-center">
-                                {{ $productPurchase->import }}
+                                {{ number_format($productPurchase->import, 2, ',', '.') }}€
                             </td>
                             <td class="text-center">
                                 {{ $products[$productPurchase->product_id - 1]->measurement_unit }}
