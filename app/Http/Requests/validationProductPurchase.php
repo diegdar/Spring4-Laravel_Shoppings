@@ -31,7 +31,7 @@ class validationProductPurchase extends FormRequest
 
         return [//nota 2
             // 'product_id'=>'required',
-            // 'quantity' => 'required|numeric',
+            'quantity' => 'required|numeric',
             // 'unit_price'=>'required|decimal:2',
         ];
     }

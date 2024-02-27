@@ -2,7 +2,8 @@
 🗒️noteS:
 1: crea un token oculto para que los usuarios no generen codigo malicioso antes de enviar el formulario.
 2: mostrara un mensaje personalizado cuando no se cumpla la validacion del campo.
-3: We have to subtract 1 unit to match the array position with the product_id      
+3: We have to subtract 1 unit to match the array position with the product_id
+4: Devuelve el importe total de la compra sumando todos los importes de los productos que la componen      
     --}}
 @extends('layouts.plantilla')
 
@@ -11,6 +12,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
+        use App\Models\ProductPurchase;
     @endphp
 
     <h1 class="text-6xl text-center text-red-500 my-4">Compras hechas</h1>
@@ -51,6 +53,9 @@
         </form>
         {{-- List purchases already created --}}
         @foreach ($purchases as $purchase)
+        @php
+        $totalImport = ProductPurchase::where('purchase_id', $purchase->id)->sum('import'); //nota 4
+        @endphp        
             <tr>
                 <td class="text-center">
                     {{ $purchase->id }}
@@ -62,8 +67,8 @@
                     {{ $purchase->supermarket }}
                 </td>
                 <td class="text-center">
-                    {{ number_format($purchase->total_import, 2, ',', '.') }}€
-                </td>
+                    {{ number_format($totalImport, 2, ',', '.') }}€ {{-- nota 4 --}}
+                </td>                 
                 {{-- Delete button --}}
                 <td class="py-2 px-4">
                     <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST">

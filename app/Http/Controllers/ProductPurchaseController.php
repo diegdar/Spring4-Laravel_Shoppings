@@ -7,31 +7,42 @@ use App\Models\Product;
 use App\Models\ProductPurchase;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-
+/*
+🗒️NOTAS:
+1: Devuelve el importe total actual de la compra
+*/
 class ProductPurchaseController extends Controller
 {
+    // public function index( $request)
+    // {
+    //     $this->store($request);
+    // }
+
+    // public function show( $request)
+    // {
+    //     $this->store($request);
+
+    // }
+
     public function store(validationProductPurchase $request)
     {
-        // Reemplaza las comas por puntos en el valor de unit_price
-        $unitPrice = str_replace(',', '.', $request->unit_price);
+        // Reemplaza las comas por puntos en el valor de unit_price 
+        $unitPrice = (float) str_replace(',', '.', $request->unit_price);
 
-        // Comprueba que no haya sido añadido el mismo producto a la compra
+        // Comprueba que no haya sido añadido el mismo producto a la compra 
         $productPurchase = $this->CheckDuplicatedProducts($request, $unitPrice);
 
-        $purchaseId = $productPurchase->purchase_id;
-        // Actualiza el total_import de la compra
-        $this->updateTotalImport($purchaseId, $productPurchase->import);
-        // Devuelve el importe total actual de la compra
-        $totalImport = $this->getTotalImport($purchaseId);
+        $purchase_id =  $request->purchase_id;
+        $purchase_date = $request->purchase_date;
+        $supermarket = $request->supermarket;
+
+        $totalImport = $this->getTotalImport($purchase_id); //nota 1
 
         $products = Product::all();
         $sortedProducts = Product::orderBy('description')->get();
         $productsPurchases = ProductPurchase::orderBy('id', 'desc')->get();
-        $purchase_id = $request->purchase_id;
-        $purchase_date = $request->purchase_date;
-        $supermarket = $request->supermarket;
 
-        return view('products_purchases.create', compact(
+        return view('productPurchases.create', compact(
             'products',
             'sortedProducts',
             'productsPurchases',
@@ -42,22 +53,14 @@ class ProductPurchaseController extends Controller
         ));
     }
 
-    // Función auxiliar para actualizar el total_import
-    private function updateTotalImport(int $purchaseId, int $import)
+    public function getTotalImport($purchaseId): float
     {
-        $record = Purchase::find($purchaseId);
-        $record->total_import += $import;
-        $record->save();
-    }
-
-    public function getTotalImport(int $purchaseId):int
-    {
-        $purchase= Purchase::find($purchaseId);
-        return $purchase->total_import;
+        $totalImport = ProductPurchase::where('purchase_id', $purchaseId)->sum('import');
+        return $totalImport;
     }
 
     // Funcion auxiliar para comprobar que no haya sido añadido el mismo producto a la compra
-    private function CheckDuplicatedProducts($request, int $unitPrice)
+    private function CheckDuplicatedProducts($request, float $unitPrice)
     {
         return ProductPurchase::firstOrCreate([
             'purchase_id' => $request->purchase_id,
@@ -69,7 +72,7 @@ class ProductPurchaseController extends Controller
         ]);
     }
 
-
+    // Elimina un producto de la compra
     public function destroy(ProductPurchase $productPurchase, Request $purchase)
     {
         $productPurchase->delete(); // Elimina la compra de producto
@@ -81,7 +84,17 @@ class ProductPurchaseController extends Controller
         $purchase_id = $purchase->purchase_id;
         $purchase_date = $purchase->purchase_date;
         $supermarket = $purchase->supermarket;
+ 
+        $totalImport = $this->getTotalImport($purchase_id); //nota 1
 
-        return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));
+        return view('productPurchases.create', compact(
+            'products', 
+            'sortedProducts', 
+            'productsPurchases', 
+            'purchase_id', 
+            'purchase_date', 
+            'supermarket',
+            'totalImport',
+        ));
     }
 }

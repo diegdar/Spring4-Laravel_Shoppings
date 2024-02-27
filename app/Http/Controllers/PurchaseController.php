@@ -48,7 +48,7 @@ class PurchaseController extends Controller
         // return $sortedProducts;
         $products = Product::all(); //note 6
 
-        return view('products_purchases.create', compact('products', 'sortedProducts', 'createdPurchase')); //note 2
+        return view('productPurchases.create', compact('products', 'sortedProducts', 'createdPurchase')); //note 2
 
     }
 
@@ -93,7 +93,7 @@ class PurchaseController extends Controller
         $productPurchaseController = new ProductPurchaseController();
         $totalImport = $productPurchaseController->getTotalImport($purchase_id);
 
-        return view('products_purchases.create', compact(
+        return view('productPurchases.create', compact(
             'products',
             'sortedProducts',
             'purchase_id',
