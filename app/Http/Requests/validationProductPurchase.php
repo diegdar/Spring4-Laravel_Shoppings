@@ -31,7 +31,7 @@ class validationProductPurchase extends FormRequest
 
         return [//nota 2
             // 'product_id'=>'required',
-            'quantity' => 'required|numeric',
+            // 'quantity' => 'required|numeric',
             // 'unit_price'=>'required|decimal:2',
         ];
     }
@@ -48,5 +48,15 @@ class validationProductPurchase extends FormRequest
                 'unit_price.decimal'=> 'Solo se admiten numeros con 2 decimales',
         ];
     }
+
+    public function attributes():array//nota 4 
+    {
+        return[
+            'product_id'=>'id del producto añadido',
+            'quantity'=>'Cantidad del producto añadido',
+            'unit_price'=>'Precio unitario del producto añadido',
+        ];
+    }
+
 
 }

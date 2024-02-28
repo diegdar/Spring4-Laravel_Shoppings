@@ -26,11 +26,13 @@ class ProductPurchaseController extends Controller
 
     public function store(validationProductPurchase $request)
     {
+        
+        // return $request;
         // Reemplaza las comas por puntos en el valor de unit_price 
         $unitPrice = (float) str_replace(',', '.', $request->unit_price);
 
-        // Comprueba que no haya sido añadido el mismo producto a la compra 
-        $productPurchase = $this->CheckDuplicatedProducts($request, $unitPrice);
+        // Comprueba que no haya sido añadido el mismo producto a la compra y si no es asi lo añade
+       $this->CheckDuplicatedProducts($request, $unitPrice);
 
         $purchase_id =  $request->purchase_id;
         $purchase_date = $request->purchase_date;
