@@ -31,14 +31,3 @@
     margin-right: 1rem;
   }
   
-  /* Opcional: estilos para los enlaces */
-  a {
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
-  }
-  
-  a:hover {
-    color: #f0f0f0;
-  }
-  

@@ -13,17 +13,6 @@ use Illuminate\Http\Request;
 */
 class ProductPurchaseController extends Controller
 {
-    // public function index( $request)
-    // {
-    //     $this->store($request);
-    // }
-
-    // public function show( $request)
-    // {
-    //     $this->store($request);
-
-    // }
-
     public function store(validationProductPurchase $request)
     {
         

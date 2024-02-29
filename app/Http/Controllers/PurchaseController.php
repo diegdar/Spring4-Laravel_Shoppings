@@ -101,6 +101,6 @@ class PurchaseController extends Controller
             'supermarket',
             'productsPurchases',
             'totalImport'
-        )); //note 2
+         )); //note 2
     }
 }
