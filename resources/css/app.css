@@ -63,6 +63,27 @@ nav {
     width: 100%;
     max-width: 960px;
   }
+  /* Boton flotante para subir a la parte de arriba de la pantalla */
+  #caja-flotante {
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
   
+  #caja-flotante:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  #caja-flotante a {
+    color: white;
+    text-decoration: none;
+  }
   
   

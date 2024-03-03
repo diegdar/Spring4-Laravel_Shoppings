@@ -14,6 +14,10 @@
         use Carbon\Carbon;
         use App\Models\ProductPurchase;
     @endphp
+{{-- Boton subir a la parte de arriba del navegador --}}
+<div id="caja-flotante">
+    <a href="#" onclick="scrollToTop()">Ir Arriba</a>
+  </div>
 
     {{-- Tabla vista Desktop -------------------------- --}}
     <div class="tableDesktop">
