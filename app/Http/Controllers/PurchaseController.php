@@ -24,51 +24,56 @@ use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
-    
+
     // Show the purchases list
-    public function index(){
+    public function index()
+    {
 
         $purchases = Purchase::orderBy('id', 'desc')->paginate(); //note 1
         // return $purchases;
 
-        $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id mostrando la mas reciente primero
-       
-        return view('purchases.index', compact('purchases', 'productsPurchases'));//note 2
+        $productsPurchases = ProductPurchase::orderBy('id', 'desc')->get(); // Obtiene las compras ordenadas por id mostrando la mas reciente primero
+
+        return view('purchases.index', compact('purchases', 'productsPurchases')); //note 2
 
     }
 
     // crea una nueva Compra en la BD y muestra la lista de Compras
-    public function store(validationPurchase $request){
+    public function store(validationPurchase $request)
+    {
         $createdPurchase = Purchase::create($request->all());
         // var_dump($createdPurchase);
 
-        $sortedProducts = Product::orderBy('description')->get();//note 5
+        $sortedProducts = Product::orderBy('description')->get(); //note 5
         // return $sortedProducts;
-        $products = Product::all();//note 6
+        $products = Product::all(); //note 6
 
-        return view('products_purchases.create', compact('products','sortedProducts', 'createdPurchase'));//note 2
-        
-    }   
+        return view('productPurchases.create', compact('products', 'sortedProducts', 'createdPurchase')); //note 2
+
+    }
 
     // Elimina una Compra en la BD y muestra la lista de Compras
-    public function destroy(Purchase $purchase){
+    public function destroy(Purchase $purchase)
+    {
 
         $purchase->delete();
 
-        return redirect()->route('purchases.index');//note 4
+        return redirect()->route('purchases.index'); //note 4
     }
-    
+
     // Muestra la vista de actualización de la Compra seleccionada
-    public function edit( Purchase $purchase){//note 3
+    public function edit(Purchase $purchase)
+    { //note 3
 
         // Formatea la fecha a YYYY-MM-DD para que se visualice en el formulario de la vista
         $purchase->purchase_date = Carbon::parse($purchase->purchase_date)->format('Y-m-d');
-        
+
         return view('purchases.edit', compact('purchase')); //note 3
     }
-    
+
     // Actualiza la compra que se selecciono
-    public function update(validationPurchase $request, Purchase $purchase){
+    public function update(validationPurchase $request, Purchase $purchase)
+    {
 
         $purchase->update($request->all()); //note 2
 
@@ -78,13 +83,24 @@ class PurchaseController extends Controller
         $purchase_date = $purchase->purchase_date;
         $supermarket = $purchase->supermarket;
 
-        $sortedProducts = Product::orderBy('description')->get();//note 5
+        $sortedProducts = Product::orderBy('description')->get(); //note 5
         // return $sortedProducts;
-        $products = Product::all();//note 6
+        $products = Product::all(); //note 6
 
-        $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); 
+        $productsPurchases = ProductPurchase::orderBy('id', 'desc')->get();
+        
+        // Devuelve el importe total actual de la compra
+        $productPurchaseController = new ProductPurchaseController();
+        $totalImport = $productPurchaseController->getTotalImport($purchase_id);
 
-        return view('products_purchases.create', compact('products','sortedProducts', 'purchase_id', 'purchase_date',        'supermarket', 'productsPurchases'));//note 2
+        return view('productPurchases.create', compact(
+            'products',
+            'sortedProducts',
+            'purchase_id',
+            'purchase_date',
+            'supermarket',
+            'productsPurchases',
+            'totalImport'
+         )); //note 2
     }
-
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_purchases', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->decimal('unit_price');
+            $table->decimal('unit_price', 8, 2)->default(0); // Indica que los digitos total sean 8, 2 sean en la parte decimal y que tenga 0 como valor por defecto
             $table->decimal('import');
             $table->foreignId('product_id')
                 ->nullable()
