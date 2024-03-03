@@ -12,55 +12,69 @@
 @section('title', 'Editar Producto')
 
 @section('content')
-    <h1 class="text-4xl	text-red-500 font-semibold">Edicion del producto:</h1>
+    <h1 class="text-4xl	text-red-500 font-semibold text-center">Edicion del producto:</h1>
     {{-- note 1 --}}
-    <form action="{{ route('products.update', $product->id) }}" method="post" class="my-5 mx-3">
+    <form action="{{ route('products.update', $product->id) }}" method="post" class="my-5 mx-3 text-center">
         @csrf {{-- note 2 --}}
         @method('put'){{-- note 3 --}}
-        <label>
-            Descripcion producto:
-        </label>
-        <br>
-        <input type="text" name="description" class="h-9 w-27"
-            value="{{ old('description', $product->description) }}" style="text-align: center">{{-- note 5 --}}
-        @error('description')
-            {{-- note 4 --}}
-            <br>
-            <span class="textValidation">*{{ $message }}</span>
-            <br>
-        @enderror
-        <br>
-        <label>
-            Unidad de medida:
-        </label>
-        <br>
-        <input type="text" name="measurement_unit" class="h-9 w-27"
-            value="{{ old('measurement_unit', $product->measurement_unit) }}" style="text-align: center">{{-- note 5 --}}
-        @error('measurement_unit')
-            {{-- note4 --}}
-            <br>
-            <span class="textValidation">*{{ $message }}</span>
-            <br>
-        @enderror
-        <br>
-        <label>
-            Categoria del producto:
-            <br>
-            <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
-                <option value="{{ old('category', $product->category) }}">{{ $product->category }}</option>
-                <option value="Alimentacion">Alimentacion</option>
-                <option value="Limpieza">Limpieza</option>
-                <option value="Higiene personal">Higiene personal</option>
-                <option value="Hogar">Hogar</option>
-            </select>
-            @error('category')
-                {{-- note 2 --}}
-                <br>
-                <span class="textValidation">*{{ $message }}</span>
-            @enderror
-            <br>
-            <button type="submit" class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300 my-3'>Actualizar
-                producto</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 items-center mb-5">
+            <section class="sm:text-right mr-3">
+                <label class="text-xl text-blue-600 font-bold">
+                    Descripcion producto:
+                </label>
+            </section>
+            <section class="text-center sm:text-left">
+                <input type="text" name="description" class="h-9 w-27"
+                    value="{{ old('description', $product->description) }}" style="text-align: center">{{-- note 5 --}}
+            </section>
+            <section class="flex  sm:col-start-2  justify-center md:justify-start">
+                @error('description'){{-- note 4 --}}
+                    <br>
+                    <span class="textValidation">*{{ $message }}</span>
+                    <br>
+                @enderror
+            </section>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 items-center mb-5">
+            <section class="sm:text-right mr-3">
+                <label class="text-xl text-blue-600 font-bold">
+                    Unidad de medida:
+                </label>
+            </section>
+            <section class="text-center sm:text-left">
+                <input type="text" name="measurement_unit" class="h-9 w-27"
+                    value="{{ old('measurement_unit', $product->measurement_unit) }}"
+                    style="text-align: center">{{-- note 5 --}}
+            </section>
+            <section class="flex  sm:col-start-2  justify-center md:justify-start">
+                @error('measurement_unit'){{-- note4 --}}
+                    <span class="textValidation">*{{ $message }}</span>
+                @enderror
+            </section>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 items-center mb-5">
+            <section class="sm:text-right mr-3">
+                <label class="text-xl text-blue-600 font-bold">
+                    Categoria del producto:
+                </label>
+            </section>
+            <section class="text-center sm:text-left">
+                <select name="category" id="category" class='px-4 py-2 border border-blue-200 rounded'>
+                    <option value="{{ old('category', $product->category) }}">{{ $product->category }}</option>
+                    <option value="Alimentacion">Alimentacion</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Higiene personal">Higiene personal</option>
+                    <option value="Hogar">Hogar</option>
+                </select>
+            </section>
+            <section class="flex  sm:col-start-2  justify-center md:justify-start">
+                @error('category'){{-- note 2 --}}
+                    <span class="textValidation">*{{ $message }}</span>
+                @enderror
+            </section>
+        </div>
+        <button type="submit" class='bg-blue-600 text-white px-7 py-2 rounded hover:bg-blue-300 my-3'>Actualizar
+            producto</button>
     </form>
 
 
