@@ -23,7 +23,7 @@
     <div class="tableDesktop">
         <table class="w-full flex items-center justify-center flex-grow-0">
             {{-- Table header rows --}}
-            <tr>
+            <tr class="DesktopHead">
                 <th class="w-48">Nº Compra</th>
                 <th class="w-48">Fecha Compra</th>
                 <th class="w-48">Supermercado</th>

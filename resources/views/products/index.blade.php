@@ -17,7 +17,7 @@
     <div class="tableDesktop">
         <table class="flex items-center justify-center">
             {{-- Table header rows --}}
-            <tr>
+            <tr class="DesktopHead"> 
                 <th>Ref. Producto</th>
                 <th>Descripcion Producto</th>
                 <th>Unidad de medida</th>
