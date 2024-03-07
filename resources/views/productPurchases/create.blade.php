@@ -40,7 +40,7 @@
                 {{-- insert products --}}
                 <section class="mx-20 md:m-auto grid grid-cols-2 sm:grid-cols-2">
                     <label for="product_id" class="text-right text-blue-600 font-bold">Producto:</label>
-                    <select name="product_id" id="product_id" class="mx-1 md:ml-2 text-center w-52">
+                    <select name="product_id" id="product_id" class="mx-1 md:ml-2 w-52">
                         <option value="--">--Elige un producto--</option>
                         @foreach ($sortedProducts as $productPurchase)
                             <option value="{{ $productPurchase->id }}">{{ $productPurchase->description }}</option>
@@ -86,23 +86,23 @@
             @if (isset($productsPurchases))
                 @foreach ($productsPurchases as $productPurchase)
                     @if ($productPurchase->purchase_id == $purchase_id)
-                        <tr>
-                            <td class="text-left">
+                        <tr class="rowsDesktop">
+                            <td class="text-center">
                                 {{ $productPurchase->product_id }}
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 {{ $products[$productPurchase->product_id - 1]->description }}
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 {{ number_format($productPurchase->unit_price, 2, ',', '.') }}€ {{-- nota 4 --}}
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 {{ $productPurchase->quantity }}
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 {{ number_format($productPurchase->import, 2, ',', '.') }}€ {{-- nota 4 --}}
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 {{ $products[$productPurchase->product_id - 1]->measurement_unit }}
                             </td>
                             {{-- Delete button --}}
