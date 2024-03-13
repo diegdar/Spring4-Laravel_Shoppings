@@ -16,7 +16,7 @@
     <table class="w-full flex items-center justify-center flex-grow-0">
       <tr>
         <td class="w-1/4">
-          <label for="purchase_date">Fecha Compra:</label>
+          <label for="purchase_date" class="text-xl text-blue-600 font-bold">Fecha Compra:</label>
         </td>
         <td class="w-3/4">
           <div class="px-4 py-2 border border-blue-200 rounded flex flex-col">
@@ -31,7 +31,7 @@
       </tr>
       <tr>
         <td class="w-1/4">
-          <label for="supermarket">Supermercado:</label>
+          <label for="supermarket" class="text-xl text-blue-600 font-bold">Supermercado:</label>
         </td>
         <td class="w-3/4">
           <div class="px-4 py-2 border border-blue-200 rounded flex flex-col">
