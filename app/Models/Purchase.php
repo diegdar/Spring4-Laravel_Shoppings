@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 /*
 🗒️NOTAS:
-1: $guarded acts in a similar way to $fillable, but instead of indicating the fields that should be allowed to be saved, we indicate the field that should be protected and therefore should not be saved if it is received through the form.
-     ⚠️If we do not have a field to protect and we still want to use mass assignment, we must leave the array empty.    
-2: The name of the function is in plural because we are referencing to many part(Products)
-3: Here we set the relation: $this(Purchase) has many products(here we have to put the name of the Class in singular).
+1: $guarded actúa de forma similar a $fillable, pero en lugar de indicar los campos que se deben permitir guardar, indicamos el campo que se debe proteger y por tanto no se debe guardar si se recibe a través del formulario.
+      ⚠️Si no tenemos un campo que proteger y aun así queremos usar asignación masiva, debemos dejar el array vacío.
+2: El nombre de la función está en plural porque hacemos referencia a muchas partes (Productos)
+3: Aquí establecemos la relación: $this(Purchase) tiene muchos productos (aquí tenemos que poner el nombre de la Clase en singular).
 */
-
 class Purchase extends Model
 {
     use HasFactory;
