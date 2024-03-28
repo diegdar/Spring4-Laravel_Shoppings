@@ -54,8 +54,10 @@ class ProductController extends Controller
         return view('products.edit', compact('product')); //note 3
     }
 
-    // Actuliza el producto seleccionado
+    // Actualiza el producto seleccionado
     public function update(validationProduct $request, Product $product){
+        // return $request;
+
         $product->update($request->all()); //note 2
 
         $products = Product::orderBy('id', 'desc')->paginate(); //note 1

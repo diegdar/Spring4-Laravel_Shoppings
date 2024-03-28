@@ -7,62 +7,85 @@ use App\Models\Product;
 use App\Models\ProductPurchase;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-
+/*
+🗒️NOTAS:
+1: Devuelve el importe total actual de la compra
+*/
 class ProductPurchaseController extends Controller
 {
     public function store(validationProductPurchase $request)
     {
-        // Verifica si ya existe una compra con el mismo purchase_id y product_id
-        $existingPurchase = ProductPurchase::where('purchase_id', $request->purchase_id)
-            ->where('product_id', $request->product_id)
-            ->first();
+        
+        // return $request;
+        // Reemplaza las comas por puntos en el valor de unit_price 
+        $unitPrice = (float) str_replace(',', '.', $request->unit_price);
 
-        $products = Product::all(); // Obtiene todos los productos
-        $sortedProducts = Product::orderBy('description')->get(); // Obtiene los productos ordenados por descripción
+        // Comprueba que no haya sido añadido el mismo producto a la compra y si no es asi lo añade
+       $this->CheckDuplicatedProducts($request, $unitPrice);
 
-        $purchase_id = $request->purchase_id;
+        $purchase_id =  $request->purchase_id;
         $purchase_date = $request->purchase_date;
         $supermarket = $request->supermarket;
 
-        if ($existingPurchase) {
-            $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id mostrando la mas reciente primero
-        } else {
-            $import = $request->quantity * $request->unit_price;
+        $totalImport = $this->getTotalImport($purchase_id); //nota 1
 
-            $productPurchase = ProductPurchase::create([
-                'purchase_id' => $request->purchase_id,
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-                'unit_price' => $request->unit_price,
-                'import' => $import,
-            ]);
+        $products = Product::all();
+        $sortedProducts = Product::orderBy('description')->get();
+        $productsPurchases = ProductPurchase::orderBy('id', 'desc')->get();
 
-            $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); 
-            // Obtiene el registro de la compra por su id
-            $record = Purchase::find($purchase_id);
-            // Actualizar el valor del campo
-            $record->total_import += $import;
-
-            // Guardar los cambios en la BBDD
-            $record->save();
-
-        }
-
-        return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));
+        return view('productPurchases.create', compact(
+            'products',
+            'sortedProducts',
+            'productsPurchases',
+            'purchase_id',
+            'purchase_date',
+            'supermarket',
+            'totalImport'
+        ));
     }
 
-    public function destroy(ProductPurchase $productPurchase, Request $request)
+    public function getTotalImport($purchaseId): float
     {
-        $purchase_id = $request->purchase_id;
-        $purchase_date = $request->purchase_date;
-        $supermarket = $request->supermarket;
+        $totalImport = ProductPurchase::where('purchase_id', $purchaseId)->sum('import');
+        return $totalImport;
+    }
 
+    // Funcion auxiliar para comprobar que no haya sido añadido el mismo producto a la compra
+    private function CheckDuplicatedProducts($request, float $unitPrice)
+    {
+        return ProductPurchase::firstOrCreate([
+            'purchase_id' => $request->purchase_id,
+            'product_id' => $request->product_id,
+        ], [
+            'quantity' => $request->quantity,
+            'unit_price' => $unitPrice,
+            'import' => $request->quantity * $unitPrice,
+        ]);
+    }
+
+    // Elimina un producto de la compra
+    public function destroy(ProductPurchase $productPurchase, Request $purchase)
+    {
         $productPurchase->delete(); // Elimina la compra de producto
 
         $products = Product::all(); // Obtiene todos los productos
         $sortedProducts = Product::orderBy('description')->get(); // Obtiene los productos ordenados por descripción
-        $productsPurchases = ProductPurchase::orderBy('id','desc')->get(); // Obtiene las compras ordenadas por id
+        $productsPurchases = ProductPurchase::orderBy('id', 'desc')->get(); // Obtiene las compras ordenadas por id
 
-        return view('products_purchases.create', compact('products', 'sortedProducts', 'productsPurchases', 'purchase_id', 'purchase_date', 'supermarket'));
+        $purchase_id = $purchase->purchase_id;
+        $purchase_date = $purchase->purchase_date;
+        $supermarket = $purchase->supermarket;
+ 
+        $totalImport = $this->getTotalImport($purchase_id); //nota 1
+
+        return view('productPurchases.create', compact(
+            'products', 
+            'sortedProducts', 
+            'productsPurchases', 
+            'purchase_id', 
+            'purchase_date', 
+            'supermarket',
+            'totalImport',
+        ));
     }
 }
